@@ -1,31 +1,160 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Submit a Bug</title>
+  <title>Accessibles || Submit a Bug</title>
+
   <style>
-    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
-    label { display: block; margin-top: 20px; }
-    textarea, input { width: 100%; padding: 8px; }
-    button { margin-top: 20px; padding: 10px 16px; }
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --card: #f5f5f5;
+      --border: #dddddd;
+      --accent: #0070f3;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a1a;
+        --fg: #e6e6e6;
+        --card: #2a2a2a;
+        --border: #444444;
+        --accent: #4fa3ff;
+      }
+    }
+
+    body {
+      font-family: sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 90%;
+      margin-top: 60px;
+      padding: 40px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    img {
+      max-width: 160px;
+      margin: 0 auto 20px;
+      display: block;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    textarea, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .lang-select {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
   </style>
 </head>
+
 <body>
+  <select class="lang-select" id="lang">
+    <option value="en">EN</option>
+    <option value="pt">PT</option>
+  </select>
 
-  <h1>Bug Report</h1>
+  <div class="container">
+    <img src="assets/logo.png" alt="Project Logo">
+    <h1 id="title"></h1>
+    <p id="intro"></p>
 
-  <img src="assets/logo.png" alt="Project Logo" style="max-width: 200px; margin-bottom: 20px;">
-  <p>If you have encountered a bug, please fill out the form below to report it. Your feedback helps us improve the project!</p>
+    <form method="POST" action="https://bug-intake-worker.luis-21e.workers.dev">
+      <label id="labelDesc"></label>
+      <textarea name="description" required></textarea>
 
-  <form method="POST" action="https://bug-intake-worker.luis-21e.workers.dev">
-    <label>Description</label>
-    <textarea name="description" required></textarea>
+      <label id="labelContact"></label>
+      <input type="text" name="contact" required />
 
-    <label>Contact (email or other)</label>
-    <input type="text" name="contact" required />
+      <button type="submit" id="buttonSubmit"></button>
+    </form>
+  </div>
 
-    <button type="submit">Submit</button>
-  </form>
+  <script>
+    const strings = {
+      en: {
+        title: "Bug Report",
+        intro: "If you encountered a bug, please tell us what happened.",
+        desc: "Description",
+        contact: "Contact (email or other)",
+        submit: "Submit"
+      },
+      pt: {
+        title: "Relatório de Erro",
+        intro: "Se encontrou um erro, descreva o que aconteceu.",
+        desc: "Descrição",
+        contact: "Contacto (email ou outro)",
+        submit: "Enviar"
+      }
+    };
 
+    function applyLang(lang) {
+      const t = strings[lang] || strings.en;
+      document.getElementById("title").textContent = t.title;
+      document.getElementById("intro").textContent = t.intro;
+      document.getElementById("labelDesc").textContent = t.desc;
+      document.getElementById("labelContact").textContent = t.contact;
+      document.getElementById("buttonSubmit").textContent = t.submit;
+    }
+
+    const selector = document.getElementById("lang");
+    selector.addEventListener("change", () => applyLang(selector.value));
+
+    // initial
+    applyLang("en");
+  </script>
 </body>
 </html>
