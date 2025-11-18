@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Accessibles || Submit a Bug</title>
+  <title>Accessibles || Bug</title>
 
   <style>
     :root {
@@ -98,6 +98,19 @@
       top: 20px;
       right: 20px;
     }
+
+    #logo-dark {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #logo-light {
+        display: none;
+      }
+      #logo-dark {
+        display: block;
+      }
+    }
   </style>
 </head>
 
@@ -108,7 +121,8 @@
   </select>
 
   <div class="container">
-    <img src="assets/logo.png" alt="Project Logo">
+    <img id="logo-light" src="assets/logo.png" alt="Project Logo">
+    <img id="logo-dark"  src="assets/logow.png" alt="Project Logo Dark">
     <h1 id="title"></h1>
     <p id="intro"></p>
 
@@ -138,6 +152,27 @@
         desc: "Descrição",
         contact: "Contacto (email ou outro)",
         submit: "Enviar"
+      },
+      es: {
+        title: "Informe de errores",
+        intro: "Si encontró un error, descríbalo.",
+        desc: "Descripción",
+        contact: "Contacto (correo electrónico u otro)",
+        submit: "Enviar"
+      },
+      cat: {
+        title: "Informe de errors",
+        intro: "Si heu trobat un error, descriviu què ha passat.",
+        desc: "Descripció",
+        contact: "Contacte (correu electrònic o altre)",
+        submit: "Enviar"
+      },
+      eus: {
+        title: "Akatsen Txostena",
+        intro: "Akats bat aurkitu baduzu, azaldu zer gertatu den.",
+        desc: "Deskribapena",
+        contact: "Harremana (posta elektronikoa edo beste)",
+        submit: "Bidali"
       }
     };
 
